@@ -13,10 +13,10 @@ requireAuth().then(() => {
     },
     methods: {
       onSearch() {
+        let sid = this.student_id.toLowerCase();
+        if (!sid.includes("st")) sid = "st" + sid;
         let ref = database.ref("v0").child("registered");
-        let studentRef = ref
-          .orderByChild("student_id")
-          .equalTo(this.student_id.toLowerCase());
+        let studentRef = ref.orderByChild("student_id").equalTo(sid);
         this.is_loading = true;
         studentRef.get().then((snap) => {
           this.is_loading = false;

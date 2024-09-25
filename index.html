@@ -104,8 +104,8 @@
           correctLevel: QRCode.CorrectLevel.L,
         });
 
-        let download = document.createElement("button");
-        qr_code_element.appendChild(download);
+        // let download = document.createElement("button");
+        // qr_code_element.appendChild(download);
 
         // let download_link = document.createElement("a");
         // download_link.className =
@@ -115,18 +115,18 @@
 
         // download.appendChild(download_link);
 
-        let qr_code_img = document.querySelector(".qr-code img");
-        let qr_code_canvas = document.querySelector("canvas");
+        // let qr_code_img = document.querySelector(".qr-code img");
+        // let qr_code_canvas = document.querySelector("canvas");
 
-        if (qr_code_img.getAttribute("src") == null) {
-          setTimeout(() => {
-            download_link.setAttribute("href", `${qr_code_canvas.toDataURL()}`);
-          }, 300);
-        } else {
-          setTimeout(() => {
-            download_link.setAttribute("href", qr_code_img.getAttribute("src"));
-          }, 300);
-        }
+        // if (qr_code_img.getAttribute("src") == null) {
+        //   setTimeout(() => {
+        //     download_link.setAttribute("href", `${qr_code_canvas.toDataURL()}`);
+        //   }, 300);
+        // } else {
+        //   setTimeout(() => {
+        //     download_link.setAttribute("href", qr_code_img.getAttribute("src"));
+        //   }, 300);
+        // }
       }
     </script>
   </body>
