@@ -68,27 +68,34 @@
         url.searchParams.append("id", id);
         generate(url.toString());
 
-        database
-          .ref("v0")
-          .child("registered")
-          .child(id)
-          .get()
-          .then((snap) => {
-            var data = snap.val();
-            if (!data) return;
-            document.getElementById("user_data").style.opacity = 1;
-            document.getElementById("name").innerText = data.name;
-            document.getElementById("student_id").innerText = data.student_id;
-            if (data.had_dinner) {
-              document.getElementById("dinner").style.opacity = 1;
-            }
-            if (data.had_drink >= 1) {
-              document.getElementById("drink_1").style.opacity = 1;
-            }
-            if (data.had_drink >= 2) {
-              document.getElementById("drink_2").style.opacity = 1;
-            }
-          });
+        var ref = database.ref("v0").child("registered").child(id);
+
+        ref.on("value", (snap) => {
+          var data = snap.val();
+          var userEl = document.getElementById("user_data");
+          var nameEl = document.getElementById("name");
+          var sidEl = document.getElementById("student_id");
+          var dinnerEl = document.getElementById("dinner");
+          var drink1El = document.getElementById("drink_1");
+          var drink2El = document.getElementById("drink_2");
+          dinnerEl.style.opacity =
+            drink1El.style.opacity =
+            drink2El.style.opacity =
+              0.2;
+          if (!data) return;
+          userEl.style.opacity = 1;
+          nameEl.innerText = data.name;
+          sidEl.innerText = data.student_id;
+          if (data.had_dinner) {
+            dinnerEl.style.opacity = 1;
+          }
+          if (data.had_drink >= 1) {
+            drink1El.style.opacity = 1;
+          }
+          if (data.had_drink >= 2) {
+            drink2El.style.opacity = 1;
+          }
+        });
       }
 
       function generate(user_input) {
