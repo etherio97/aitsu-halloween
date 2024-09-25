@@ -1,6 +1,5 @@
+let html5QrCode;
 requireAuth().then(() => {
-  let html5QrCode;
-
   new Vue({
     el: "#app",
     data: {
@@ -10,6 +9,8 @@ requireAuth().then(() => {
       is_loading: false,
       is_found: false,
       scan_qr: false,
+      devicesList: [],
+      device: null,
     },
     methods: {
       onSearch() {
@@ -51,11 +52,22 @@ requireAuth().then(() => {
       onScanQR() {
         this.scan_qr = true;
         setTimeout(() => {
+          let camera = { facingMode: "environment" };
+          if (this.device) {
+            camera = this.device;
+          }
           html5QrCode = new Html5Qrcode("reader", {
             formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
           });
+          Html5Qrcode.getCameras().then((devices) => {
+            if (devices && devices.length) {
+              this.devicesList = devices;
+            }
+          });
+          console.log(camera);
+
           html5QrCode.start(
-            { facingMode: "environment" },
+            camera,
             {
               fps: 10,
               experimentalFeatures: { useBarCodeDetectorIfSupported: false },

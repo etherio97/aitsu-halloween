@@ -133,9 +133,16 @@
         v-if="scan_qr"
         class="fixed h-screen w-screen bg-white inset-0 flex justify-center items-center"
       >
-        <div>
+        <div class="flex flex-col space-y-5 justify-center items-center">
           <div>
-            <div id="reader" class="w-screen"></div>
+            <div class="mb-4">
+              <select v-model="device">
+                <option v-for="device in devicesList" :value="device.id">
+                  {{device.label}}
+                </option>
+              </select>
+            </div>
+            <div id="reader" class="w-screen max-w-[320px]"></div>
           </div>
 
           <div class="pt-5 w-full flex justify-center items-center">
