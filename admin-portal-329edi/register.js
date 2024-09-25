@@ -6,6 +6,7 @@ requireAuth().then(() => {
       name: "",
       student_id: "",
       dietary_preference: "",
+      type: "Participant",
       is_walked_in: true,
       is_registered: false,
       is_loading: false,
