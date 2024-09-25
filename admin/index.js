@@ -2,7 +2,7 @@ requireAuth().then(() => {
   new Vue({
     el: "#app",
     data: {
-      config: { fee: 0, max_drink: 0 },
+      config: { fee: 0 },
       student_id: "",
       lists: [],
       is_loading: false,

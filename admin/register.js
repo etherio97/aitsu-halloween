@@ -11,6 +11,7 @@ requireAuth().then(() => {
       is_walked_in: true,
       is_registered: false,
       is_loading: false,
+      remaining: { pork: 0, chicken: 0, vege: 0 },
     },
     methods: {
       onRegister() {
@@ -31,7 +32,23 @@ requireAuth().then(() => {
         };
         let ref = database.ref("v0").child("registered");
         this.is_loading = true;
-        ref.push(registrant).then((snap) => {
+        ref.push(registrant).then(async (snap) => {
+          let newConfig = {};
+          switch (this.dietary_preference) {
+            case "Chicken Dinner Box":
+              newConfig.walked_chicken =
+                firebase.database.ServerValue.increment(1);
+              break;
+            case "Pork Dinner Box":
+              newConfig.walked_pork =
+                firebase.database.ServerValue.increment(1);
+              break;
+            case "Vegetarian Dinner Box":
+              newConfig.walked_vege =
+                firebase.database.ServerValue.increment(1);
+              break;
+          }
+          await database.ref("v0").child("config").update(newConfig);
           var id = snap.key;
           var url = new URL(`${location.protocol}//${location.host}`);
           url.searchParams.append("id", id);
@@ -45,7 +62,15 @@ requireAuth().then(() => {
     mounted() {
       let ref = database.ref("v0").child("config");
       ref.get().then((snap) => {
-        this.amount_paid = snap.val().fee;
+        let config = snap.val();
+        this.amount_paid = config.fee;
+        this.remaining.chicken =
+          config.total_chicken -
+          (config.registered_chicken + config.walked_chicken);
+        this.remaining.pork =
+          config.total_pork - (config.registered_pork + config.walked_pork);
+        this.remaining.vege =
+          config.total_vege - (config.registered_vege + config.walked_vege);
       });
     },
   });

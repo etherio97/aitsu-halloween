@@ -86,11 +86,15 @@
               required
             >
               <option value="" selected disabled>- select option -</option>
-              <option value="Vegetarian Dinner Box">
-                Vegetarian Dinner Box
+              <option value="Chicken Dinner Box">
+                Chicken Dinner Box ({{remaining.chicken}})
               </option>
-              <option value="Pork Dinner Box">Pork Dinner Box</option>
-              <option value="Chicken Dinner Box">Chicken Dinner Box</option>
+              <option value="Pork Dinner Box">
+                Pork Dinner Box ({{remaining.pork}})
+              </option>
+              <option value="Vegetarian Dinner Box">
+                Vegetarian Dinner Box ({{remaining.vege}})
+              </option>
             </select>
           </div>
           <div class="mb-5">
@@ -111,7 +115,7 @@
               <option value="Performer">Performer</option>
             </select>
           </div>
-          <div class="flex items-start mb-5">
+          <!-- <div class="flex items-start mb-5">
             <div class="flex items-center h-5">
               <input
                 v-model="is_walked_in"
@@ -126,7 +130,7 @@
               class="ms-2 text-sm font-medium text-gray-900"
               >Walk-in</label
             >
-          </div>
+          </div> -->
 
           <button
             type="submit"
