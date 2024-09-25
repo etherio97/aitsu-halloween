@@ -48,6 +48,20 @@ requireAuth().then(() => {
             newConfig.total_registered =
               firebase.database.ServerValue.increment(1);
           }
+          switch (this.type) {
+            case "Volunteer":
+              newConfig.total_volunteer =
+                firebase.database.ServerValue.increment(1);
+              break;
+            case "Performer":
+              newConfig.total_performer =
+                firebase.database.ServerValue.increment(1);
+              break;
+            default:
+              newConfig.total_participant =
+                firebase.database.ServerValue.increment(1);
+              break;
+          }
           switch (this.dietary_preference) {
             case "Chicken Dinner Box":
               newConfig.walked_chicken =
