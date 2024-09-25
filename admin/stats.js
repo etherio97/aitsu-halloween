@@ -2,7 +2,7 @@ requireAuth().then(() => {
   new Vue({
     el: "#app",
     data: {
-      config: { fee: 0, max_drink: 0 },
+      config: {},
       is_recalculating: false,
     },
     methods: {
@@ -14,13 +14,24 @@ requireAuth().then(() => {
             id,
             ...data,
           }));
-          let registered_chicken = 0,
+          let total_walked = 0,
+            total_registered = 0,
+            total_attend = 0,
+            registered_chicken = 0,
             registered_pork = 0,
             registered_vege = 0,
             walked_chicken = 0,
             walked_pork = 0,
             walked_vege = 0;
           for (let item of data) {
+            if (item.is_attend) {
+              total_attend++;
+            }
+            if (item.is_walked_in) {
+              total_walked++;
+            } else {
+              total_registered++;
+            }
             switch (item.dietary_preference) {
               case "Chicken Dinner Box":
                 if (item.is_walked_in) {
@@ -48,6 +59,9 @@ requireAuth().then(() => {
           let ref = database.ref("v0").child("config");
           ref
             .update({
+              total_registered,
+              total_walked,
+              total_attend,
               registered_chicken,
               registered_pork,
               registered_vege,
@@ -55,8 +69,9 @@ requireAuth().then(() => {
               walked_pork,
               walked_vege,
             })
-            .then(() => {
+            .then((snap) => {
               this.is_recalculating = false;
+              this.config = snap.val();
             });
         });
       },

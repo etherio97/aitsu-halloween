@@ -43,7 +43,12 @@ requireAuth().then(() => {
             is_attend: true,
             checked_in: Date.now(),
           })
-          .then(() => {
+          .then(async () => {
+            database
+              .ref("v0")
+              .child("config")
+              .child("total_attend")
+              .update(firebase.database.ServerValue.increment(1));
             this.onShareQR({ id });
             this.onSearch();
           });
@@ -62,6 +67,11 @@ requireAuth().then(() => {
             checked_in: 0,
           })
           .then(() => {
+            database
+              .ref("v0")
+              .child("config")
+              .child("total_attend")
+              .update(firebase.database.ServerValue.increment(-1));
             this.onSearch();
           });
       },

@@ -26,14 +26,22 @@ requireAuth().then(() => {
           had_drink: 0,
           is_attend: false,
           amount_paid: this.amount_paid,
-          checked_in: 0,
           type: this.type,
+          checked_in: Date.now(),
           registered_at: Date.now(),
         };
         let ref = database.ref("v0").child("registered");
         this.is_loading = true;
         ref.push(registrant).then(async (snap) => {
-          let newConfig = {};
+          let newConfig = {
+            total_attend: firebase.database.ServerValue.increment(1),
+          };
+          if (this.is_walked_in) {
+            newConfig.total_walked = firebase.database.ServerValue.increment(1);
+          } else {
+            newConfig.total_registered =
+              firebase.database.ServerValue.increment(1);
+          }
           switch (this.dietary_preference) {
             case "Chicken Dinner Box":
               newConfig.walked_chicken =
