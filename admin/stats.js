@@ -18,6 +18,9 @@ requireAuth().then(() => {
             total_walked = 0,
             total_registered = 0,
             total_attend = 0,
+            total_participant = 0,
+            total_performer = 0,
+            total_volunteer = 0,
             registered_chicken = 0,
             registered_pork = 0,
             registered_vege = 0,
@@ -32,6 +35,16 @@ requireAuth().then(() => {
               total_walked++;
             } else {
               total_registered++;
+            }
+            switch (item.type) {
+              case "Volunteer":
+                total_volunteer++;
+                break;
+              case "Performer":
+                total_performer++;
+                break;
+              default:
+                total_participant++;
             }
             switch (item.dietary_preference) {
               case "Chicken Dinner Box":
