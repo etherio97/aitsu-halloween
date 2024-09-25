@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beats & Breaks</title>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qr-scanner@1.4.2/qr-scanner.legacy.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="app" class="m-4">
+      <h2 class="text-2xl font-bold mb-4">Scan</h2>
+
+      <div>
+        <form class="max-w-sm mx-auto" v-on:submit.prevent="onSearch">
+          <div class="flex space-x-2 items-center justify-center">
+            <div class="mb-5 w-full">
+              <label
+                for="student_id"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Student ID</label
+              >
+              <input
+                v-model="student_id"
+                type="search"
+                id="student_id"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+              />
+            </div>
+            <div>
+              <button
+                v-on:click="onScanQR()"
+                type="button"
+                class="text-white bg-gray-400 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-gray-400"
+              >
+                Scan
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-gray-400"
+            :disabled="student_id==''||is_loading"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      <div v-if="is_found" class="pt-4">
+        <h4 class="text-lg font-bold">Registered: ({{lists.length}})</h4>
+
+        <div class="pt-2 py-2" v-for="list in lists">
+          <div class="pb-2 relative overflow-x-auto">
+            <div class="flex space-x-2 text-xs">
+              <button
+                v-on:click="onDinner(list)"
+                :disabled="list.had_dinner>=1"
+                class="text-white bg-red-600 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
+              >
+                Dinner
+              </button>
+              <button
+                v-on:click="onDrink(list)"
+                :disabled="list.had_drink>=1"
+                class="text-white bg-red-600 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
+              >
+                Drink 1
+              </button>
+              <button
+                v-on:click="onDrink(list)"
+                :disabled="list.had_drink>=2"
+                class="text-white bg-red-600 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
+              >
+                Drink 2
+              </button>
+            </div>
+          </div>
+
+          <table class="w-full text-sm">
+            <tbody>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Name</th>
+                <td class="px-2 py-2 whitespace-nowrap">{{list.name}}</td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Email</th>
+                <td class="px-2 py-2 whitespace-nowrap">{{list.email}}</td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Student ID</th>
+                <td class="px-2 py-2 whitespace-nowrap">{{list.student_id}}</td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Name</th>
+                <td class="px-2 py-2 whitespace-nowrap">{{list.name}}</td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">School</th>
+                <td class="px-2 py-2 whitespace-nowrap">{{list.school}}</td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Intake</th>
+                <td class="px-2 py-2 whitespace-nowrap">
+                  {{list.intake_moth}} {{list.intake_year}}
+                </td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Program</th>
+                <td class="px-2 py-2 whitespace-nowrap">{{list.program}}</td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">
+                  Dietary Preference
+                </th>
+                <td class="px-2 py-2 whitespace-nowrap">
+                  {{list.dietary_preference}}
+                </td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Amount Paid</th>
+                <td class="px-2 py-2 whitespace-nowrap">
+                  {{list.amount_paid}}
+                </td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Checked In</th>
+                <td class="px-2 py-2 whitespace-nowrap">
+                  {{toDate(list.checked_in)}}
+                </td>
+              </tr>
+              <tr class="bg-white border-b">
+                <th class="px-2 py-2 bg-gray-500 text-white">Registered At</th>
+                <td class="px-2 py-2 whitespace-nowrap">
+                  {{toDate(list.registered_at)}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div
+        v-if="scan_qr"
+        class="fixed h-screen w-screen bg-white inset-0 flex justify-center items-center"
+      >
+        <div>
+          <div>
+            <video></video>
+          </div>
+
+          <div class="pt-5 w-full flex justify-center items-center">
+            <button
+              v-on:click="onCloseQR()"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../app.js"></script>
+    <script src="scan.js"></script>
+  </body>
+</html>

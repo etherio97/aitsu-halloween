@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beats & Breaks</title>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="app" class="m-4">
+      <h2 class="text-2xl font-bold mb-4">Registrants</h2>
+
+      <div class="relative overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="text-xs text-white uppercase bg-gray-600">
+            <tr>
+              <th scope="col" class="px-6 py-3">Student ID</th>
+              <th scope="col" class="px-6 py-3">Name</th>
+              <th scope="col" class="px-6 py-3">School</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="bg-white border-b"
+              v-for="registrant in registrants"
+              :key="registrant.student_id"
+            >
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{registrant.student_id}}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{registrant.name}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{registrant.school}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="../app.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

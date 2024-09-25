@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beats & Breaks</title>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="app" class="m-4">
+      <h2 class="text-2xl font-bold mb-4">Register</h2>
+
+      <div>
+        <form class="max-w-sm mx-auto" v-on:submit.prevent="onRegister">
+          <div class="mb-5">
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Email</label
+            >
+            <input
+              v-model="email"
+              type="email"
+              id="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            />
+          </div>
+          <div class="mb-5">
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Full Name</label
+            >
+            <input
+              v-model="name"
+              type="text"
+              id="name"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            />
+          </div>
+          <div class="mb-5">
+            <label
+              for="student_id"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Student ID</label
+            >
+            <input
+              v-model="student_id"
+              type="text"
+              id="student_id"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            />
+          </div>
+          <div class="mb-5">
+            <label
+              for="school"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >School</label
+            >
+            <select
+              v-model="school"
+              id="school"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            >
+              <option value="" selected disabled>- select option -</option>
+              <option value="SET">SET</option>
+              <option value="SERD">SERD</option>
+              <option value="SOM">SOM</option>
+            </select>
+          </div>
+          <div class="mb-5">
+            <label
+              for="intake_year"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Intake (Year)</label
+            >
+            <input
+              v-model="intake_year"
+              type="tel"
+              id="intake_year"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            />
+          </div>
+          <div class="mb-5">
+            <label
+              for="intake_month"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Intake (Month)</label
+            >
+            <select
+              v-model="intake_month"
+              id="intake_month"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            >
+              <option value="" selected disabled>- select option -</option>
+              <option value="January">January</option>
+              <option value="March">March</option>
+              <option value="June">June</option>
+              <option value="August">August</option>
+              <option value="October">October</option>
+            </select>
+          </div>
+          <div class="mb-5">
+            <label
+              for="program"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Program</label
+            >
+            <input
+              v-model="program"
+              type="text"
+              id="program"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            />
+          </div>
+          <div class="mb-5">
+            <label
+              for="dietary_preference"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Dietary Preference</label
+            >
+            <select
+              v-model="dietary_preference"
+              id="dietary_preference"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            >
+              <option value="" selected disabled>- select option -</option>
+              <option value="Vegetarian Dinner Box">
+                Vegetarian Dinner Box
+              </option>
+              <option value="Pork Dinner Box">Pork Dinner Box</option>
+              <option value="Chicken Dinner Box">Chicken Dinner Box</option>
+            </select>
+          </div>
+          <div class="flex items-start mb-5">
+            <div class="flex items-center h-5">
+              <input
+                v-model="is_walked_in"
+                id="is_walked_in"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+              />
+            </div>
+            <label
+              for="is_walked_in"
+              class="ms-2 text-sm font-medium text-gray-900"
+              >Walk-in</label
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-gray-400"
+            :disabled="is_loading"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+
+      <div
+        v-if="is_registered"
+        class="fixed h-screen w-screen bg-white inset-0 flex justify-center items-center"
+      >
+        <div class="qr-code-container">
+          <div class="qr-code"></div>
+
+          <div class="pt-5 w-full flex justify-center items-center">
+            <a
+              href="./"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+              Done
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../app.js"></script>
+    <script src="register.js"></script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beats & Breaks</title>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-800 text-white">
+    <div class="px-5 py-12">
+      <div class="text-center text-2xl font-bold">Beats & Breaks</div>
+
+      <div
+        class="qr-code flex flex-col items-center justify-center space-y-4"
+      ></div>
+      <div class="space-y-4 pt-5">
+        <div>
+          <p class="text-center font-bold text-lg" id="name"></p>
+          <p class="text-center text-sm" id="student_id"></p>
+        </div>
+
+        <div
+          class="flex space-x-5 justify-center"
+          id="user_data"
+          style="transition: all ease-in 350ms; opacity: 0"
+        >
+          <div>
+            <img
+              class="w-14"
+              id="dinner"
+              src="assets/dinner.png"
+              style="opacity: 0.2"
+            />
+          </div>
+          <div>
+            <img
+              class="w-14"
+              id="drink_1"
+              src="assets/drinks.png"
+              style="opacity: 0.2"
+            />
+          </div>
+          <div>
+            <img
+              class="w-14"
+              id="drink_2"
+              src="assets/drinks.png"
+              style="opacity: 0.2"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+      let query = new URLSearchParams(location.search);
+      let qr_code_element = document.querySelector(".qr-code");
+
+      if (query.has("id")) {
+        var id = query.get("id");
+        var url = new URL(`${location.protocol}//${location.host}`);
+        url.searchParams.append("id", id);
+        generate(url.toString());
+
+        database
+          .ref("v0")
+          .child("registered")
+          .child(id)
+          .get()
+          .then((snap) => {
+            var data = snap.val();
+            if (!data) return;
+            document.getElementById("user_data").style.opacity = 1;
+            document.getElementById("name").innerText = data.name;
+            document.getElementById("student_id").innerText = data.student_id;
+            if (data.had_dinner) {
+              document.getElementById("dinner").style.opacity = 1;
+            }
+            if (data.had_drink >= 1) {
+              document.getElementById("drink_1").style.opacity = 1;
+            }
+            if (data.had_drink >= 2) {
+              document.getElementById("drink_2").style.opacity = 1;
+            }
+          });
+      }
+
+      function generate(user_input) {
+        qr_code_element.style = "";
+
+        var qrcode = new QRCode(qr_code_element, {
+          logo: "./assets/logo.png",
+          text: user_input,
+          width: 240,
+          height: 240,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H,
+        });
+
+        let download = document.createElement("button");
+        qr_code_element.appendChild(download);
+
+        let download_link = document.createElement("a");
+        download_link.className =
+          "text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2";
+        download_link.setAttribute("download", "beats-breaks-ticket.png");
+        download_link.innerHTML = `Save QR Image`;
+
+        download.appendChild(download_link);
+
+        let qr_code_img = document.querySelector(".qr-code img");
+        let qr_code_canvas = document.querySelector("canvas");
+
+        if (qr_code_img.getAttribute("src") == null) {
+          setTimeout(() => {
+            download_link.setAttribute("href", `${qr_code_canvas.toDataURL()}`);
+          }, 300);
+        } else {
+          setTimeout(() => {
+            download_link.setAttribute("href", qr_code_img.getAttribute("src"));
+          }, 300);
+        }
+      }
+    </script>
+  </body>
+</html>
