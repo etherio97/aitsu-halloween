@@ -30,6 +30,9 @@ requireAuth().then(() => {
           checked_in: Date.now(),
           registered_at: Date.now(),
         };
+        if (!registrant.student_id.includes("st")) {
+          registrant.student_id = "st" + registrant.student_id;
+        }
         let ref = database.ref("v0").child("registered");
         this.is_loading = true;
         ref.push(registrant).then(async (snap) => {
