@@ -6,7 +6,7 @@ requireAuth().then(() => {
       name: "",
       student_id: "",
       dietary_preference: "",
-      amount_paid: 100,
+      amount_paid: 0,
       type: "Participant",
       is_walked_in: true,
       is_registered: false,
@@ -41,6 +41,12 @@ requireAuth().then(() => {
           }, 200);
         });
       },
+    },
+    mounted() {
+      let ref = database.ref("v0").child("config");
+      ref.get().then((snap) => {
+        this.amount_paid = snap.val().fee;
+      });
     },
   });
 
