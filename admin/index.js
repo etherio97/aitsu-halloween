@@ -62,7 +62,6 @@ requireAuth().then(() => {
             checked_in: 0,
           })
           .then(() => {
-            this.onShareQR({ id });
             this.onSearch();
           });
       },
