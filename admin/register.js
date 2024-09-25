@@ -24,7 +24,7 @@ requireAuth().then(() => {
           email: this.email,
           had_dinner: 0,
           had_drink: 0,
-          is_attend: false,
+          is_attend: true,
           amount_paid: parseInt(this.amount_paid),
           type: this.type,
           checked_in: Date.now(),

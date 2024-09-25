@@ -31,15 +31,11 @@ requireAuth().then(() => {
           }));
         });
       },
-      onCheckIn({ id, amount_paid }) {
+      onCheckIn({ id }) {
         if (!confirm("Are you sure do you mark as check in?")) return;
         let ref = database.ref("v0").child("registered").child(id);
-        if (amount_paid <= this.config.fee) {
-          amount_paid = this.config.fee;
-        }
         ref
           .update({
-            amount_paid,
             is_attend: true,
             checked_in: Date.now(),
           })
@@ -51,29 +47,6 @@ requireAuth().then(() => {
                 total_attend: firebase.database.ServerValue.increment(1),
               });
             this.onShareQR({ id });
-            this.onSearch();
-          });
-      },
-      onUndoCheckIn({ id, amount_paid }) {
-        var newAmount = prompt(
-          "Do you want to update paid amount?",
-          amount_paid
-        );
-        if (!newAmount) return;
-        let ref = database.ref("v0").child("registered").child(id);
-        ref
-          .update({
-            amount_paid,
-            is_attend: false,
-            checked_in: 0,
-          })
-          .then(() => {
-            database
-              .ref("v0")
-              .child("config")
-              .update({
-                total_attend: firebase.database.ServerValue.increment(-1),
-              });
             this.onSearch();
           });
       },
