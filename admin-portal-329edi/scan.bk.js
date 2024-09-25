@@ -1,6 +1,4 @@
 requireAuth().then(() => {
-  let html5QrCode;
-
   new Vue({
     el: "#app",
     data: {
@@ -51,28 +49,26 @@ requireAuth().then(() => {
       onScanQR() {
         this.scan_qr = true;
         setTimeout(() => {
-          html5QrCode = new Html5Qrcode("reader", {
-            formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
-          });
-          html5QrCode.start(
-            { facingMode: "user" },
-            { fps: 10 },
-            (decodedText) => {
+          const qrScanner = new QrScanner(
+            document.querySelector("video"),
+            (result) => {
+              qrScanner.stop();
+              this.onCloseQR();
               try {
-                let url = new URL(decodedText);
+                let url = new URL(result);
                 let id = url.searchParams.get("id");
                 this.searchById(id);
-                this.onCloseQR();
               } catch (e) {
                 alert("Invalid QR Code");
               }
             }
           );
+
+          qrScanner.start();
         }, 300);
       },
       onCloseQR() {
         this.scan_qr = false;
-        html5QrCode?.stop();
       },
       onDinner({ id }) {
         if (!confirm("Are you sure do you want to proceed this action?"))
