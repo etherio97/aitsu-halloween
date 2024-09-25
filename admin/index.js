@@ -48,6 +48,24 @@ requireAuth().then(() => {
             this.onSearch();
           });
       },
+      onUndoCheckIn({ id, amount_paid }) {
+        var newAmount = prompt(
+          "Do you want to update paid amount?",
+          amount_paid
+        );
+        if (!newAmount) return;
+        let ref = database.ref("v0").child("registered").child(id);
+        ref
+          .update({
+            amount_paid,
+            is_attend: false,
+            checked_in: 0,
+          })
+          .then(() => {
+            this.onShareQR({ id });
+            this.onSearch();
+          });
+      },
       onShareQR({ id }) {
         this.share_qr = true;
         setTimeout(() => {

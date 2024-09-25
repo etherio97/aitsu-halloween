@@ -61,9 +61,16 @@
               <button
                 v-on:click="onCheckIn(list)"
                 class="text-white bg-gray-800 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
-                :disabled="list.is_attend"
+                v-if="list.is_attend"
               >
-                Check In
+                Check-In
+              </button>
+              <button
+                v-on:click="onUndoCheckIn(list)"
+                class="text-white bg-gray-800 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
+                v-if="list.is_attend"
+              >
+                Undo Check-In
               </button>
               <button
                 v-on:click="onShareQR(list)"
