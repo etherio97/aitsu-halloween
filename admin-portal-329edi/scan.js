@@ -51,13 +51,29 @@ requireAuth().then(() => {
       onScanQR() {
         this.scan_qr = true;
         setTimeout(() => {
-          html5QrCode = new Html5Qrcode("reader", {
-            formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
-          });
-          html5QrCode.start(
-            { facingMode: "user" },
-            { fps: 10 },
-            (decodedText) => {
+          html5QrCode = new Html5Qrcode("reader");
+          // html5QrCode = new Html5Qrcode("reader", {
+          //   formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+          // });
+          // html5QrCode.start(
+          //   { facingMode: "environment" },
+          //   { fps: 10 },
+          //   (decodedText) => {
+          //     try {
+          //       let url = new URL(decodedText);
+          //       let id = url.searchParams.get("id");
+          //       this.searchById(id);
+          //       this.onCloseQR();
+          //     } catch (e) {
+          //       alert("Invalid QR Code");
+          //     }
+          //   }
+          // );
+          const fileinput = document.getElementById("qr-input-file");
+          fileinput.addEventListener("change", (e) => {
+            if (!e.target.files.length) return;
+            const imageFile = e.target.files[0];
+            html5QrCode.scanFile(imageFile, true).then((decodedText) => {
               try {
                 let url = new URL(decodedText);
                 let id = url.searchParams.get("id");
@@ -66,8 +82,8 @@ requireAuth().then(() => {
               } catch (e) {
                 alert("Invalid QR Code");
               }
-            }
-          );
+            });
+          });
         }, 300);
       },
       onCloseQR() {
