@@ -68,6 +68,8 @@
         url.searchParams.append("id", id);
         generate(url.toString());
 
+        localStorage.setItem("__ID", id);
+
         var ref = database.ref("v0").child("registered").child(id);
 
         ref.on("value", (snap) => {

@@ -64,8 +64,6 @@ requireAuth().then(() => {
               this.devicesList = devices;
             }
           });
-          console.log(camera);
-
           html5QrCode.start(
             camera,
             {
@@ -99,12 +97,22 @@ requireAuth().then(() => {
             this.searchById(id);
           });
       },
-      onDrink({ id, had_drink }) {
+      onDrink({ id }) {
         if (!confirm("Are you sure do you want to proceed this action?"))
           return;
         let ref = database.ref("v0").child("registered").child(id);
         ref
           .update({ had_drink: firebase.database.ServerValue.increment(1) })
+          .then(() => {
+            this.searchById(id);
+          });
+      },
+      onCancelDrink({ id }) {
+        if (!confirm("Are you sure do you want to proceed this action?"))
+          return;
+        let ref = database.ref("v0").child("registered").child(id);
+        ref
+          .update({ had_drink: firebase.database.ServerValue.increment(-1) })
           .then(() => {
             this.searchById(id);
           });

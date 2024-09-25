@@ -81,6 +81,13 @@
               >
                 Drink 2
               </button>
+              <button
+                v-on:click="onCancelDrink(list)"
+                :disabled="list.had_drink<1"
+                class="text-white bg-gray-600 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
+              >
+                Cancel Drink
+              </button>
             </div>
           </div>
 
