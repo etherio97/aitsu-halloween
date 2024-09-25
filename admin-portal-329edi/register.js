@@ -17,7 +17,6 @@ requireAuth().then(() => {
           email: this.email,
           name: this.name,
           student_id: this.student_id.toLowerCase(),
-          school: this.school,
           dietary_preference: this.dietary_preference,
           is_walked_in: !!this.is_walked_in,
           email: this.email,
