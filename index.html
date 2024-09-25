@@ -11,7 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.min.js"></script>
     <link rel="stylesheet" href="/assets/styles.css" />
     <style>
       body {
@@ -94,84 +93,83 @@
       </div>
     </div>
 
-    <script src="app.js">
-      </link>
-          <script>
-            (function () {
-              let id = "";
-              let query = new URLSearchParams(location.search);
-              let qr_code_element = document.querySelector(".qr-code");
+    <script src="app.js"></script>
+    <script>
+      (function () {
+        let id = "";
+        let query = new URLSearchParams(location.search);
+        let qr_code_element = document.querySelector(".qr-code");
 
-              if (query.has("id")) {
-                id = query.get("id");
-                localStorage.setItem("__ID", id);
-              } else {
-                let _id = localStorage.getItem("__ID");
-                if (!_id) return;
-                id = _id;
-              }
+        if (query.has("id")) {
+          id = query.get("id");
+          localStorage.setItem("__ID", id);
+        } else {
+          let _id = localStorage.getItem("__ID");
+          if (!_id) return;
+          id = _id;
+        }
 
-              let url = new URL(`${location.protocol}//${location.host}`);
-              let ref = database.ref("v0").child("registered").child(id);
+        let url = new URL(`${location.protocol}//${location.host}`);
+        let ref = database.ref("v0").child("registered").child(id);
 
-              url.searchParams.append("id", id);
+        url.searchParams.append("id", id);
 
-              generate(url.toString());
+        generate(url.toString());
 
-              ref.on("value", (snap) => {
-                var data = snap.val();
-                var userEl = document.getElementById("user_data");
-                var nameEl = document.getElementById("name");
-                var sidEl = document.getElementById("student_id");
-                var dinnerEl = document.getElementById("dinner");
-                var drink1El = document.getElementById("drink_1");
-                var drink2El = document.getElementById("drink_2");
-                var dietaryEl = document.getElementById("dietary_preference");
-                var typeEl = document.getElementById("type");
-                var checkedEl = document.getElementById("checked_in");
+        ref.on("value", (snap) => {
+          var data = snap.val();
+          var userEl = document.getElementById("user_data");
+          var nameEl = document.getElementById("name");
+          var sidEl = document.getElementById("student_id");
+          var dinnerEl = document.getElementById("dinner");
+          var drink1El = document.getElementById("drink_1");
+          var drink2El = document.getElementById("drink_2");
+          var dietaryEl = document.getElementById("dietary_preference");
+          var typeEl = document.getElementById("type");
+          var checkedEl = document.getElementById("checked_in");
 
-                dinnerEl.style.opacity =
-                  drink1El.style.opacity =
-                  drink2El.style.opacity =
-                    0.2;
-                if (!data) return;
-                userEl.style.opacity = 1;
-                nameEl.innerText = data.name;
-                sidEl.innerText = data.student_id;
-                typeEl.innerText = data.type;
-                dietaryEl.innerText = data.dietary_preference;
-                if (data.had_dinner) {
-                  dinnerEl.style.opacity = 1;
-                }
-                if (data.had_drink >= 1) {
-                  drink1El.style.opacity = 1;
-                }
-                if (data.had_drink >= 2) {
-                  drink2El.style.opacity = 1;
-                }
-                if (data.is_attend) {
-                  checkedEl.innerText = `Checked in at ${new Date(
-                    data.checked_in
-                  ).toLocaleString()}`;
-                } else {
-                  checkedEl.innerText = "Please check in at registration counter.";
-                }
-              });
+          dinnerEl.style.opacity =
+            drink1El.style.opacity =
+            drink2El.style.opacity =
+              0.2;
+          if (!data) return;
+          userEl.style.opacity = 1;
+          nameEl.innerText = data.name;
+          sidEl.innerText = data.student_id;
+          typeEl.innerText = data.type;
+          dietaryEl.innerText = data.dietary_preference;
+          if (data.had_dinner) {
+            dinnerEl.style.opacity = 1;
+          }
+          if (data.had_drink >= 1) {
+            drink1El.style.opacity = 1;
+          }
+          if (data.had_drink >= 2) {
+            drink2El.style.opacity = 1;
+          }
+          if (data.is_attend) {
+            checkedEl.innerText = `Checked in at ${new Date(
+              data.checked_in
+            ).toLocaleString()}`;
+          } else {
+            checkedEl.innerText = "Please check in at registration counter.";
+          }
+        });
 
-              function generate(user_input) {
-                qr_code_element.style = "";
+        function generate(user_input) {
+          qr_code_element.style = "";
 
-                var qrcode = new QRCode(qr_code_element, {
-                  logo: "./assets/logo.png",
-                  text: user_input,
-                  width: 240,
-                  height: 240,
-                  colorDark: "#000000",
-                  colorLight: "#ffffff",
-                  correctLevel: QRCode.CorrectLevel.L,
-                });
-              }
-            })();
+          var qrcode = new QRCode(qr_code_element, {
+            logo: "./assets/logo.png",
+            text: user_input,
+            width: 240,
+            height: 240,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.L,
+          });
+        }
+      })();
     </script>
   </body>
 </html>
