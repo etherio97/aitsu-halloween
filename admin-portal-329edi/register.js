@@ -25,6 +25,7 @@ requireAuth().then(() => {
           is_attend: false,
           amount_paid: 100,
           checked_in: 0,
+          type: this.type,
           registered_at: Date.now(),
         };
         let ref = database.ref("v0").child("registered");
