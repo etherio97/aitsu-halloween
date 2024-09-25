@@ -14,7 +14,8 @@ requireAuth().then(() => {
             id,
             ...data,
           }));
-          let total_walked = 0,
+          let total_revenue = 0,
+            total_walked = 0,
             total_registered = 0,
             total_attend = 0,
             registered_chicken = 0,
@@ -55,10 +56,12 @@ requireAuth().then(() => {
                 }
                 break;
             }
+            total_revenue += parseInt(item.amount_paid) || 0;
           }
           let ref = database.ref("v0").child("config");
           ref
             .update({
+              total_revenue,
               total_registered,
               total_walked,
               total_attend,

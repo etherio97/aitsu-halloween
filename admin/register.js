@@ -25,7 +25,7 @@ requireAuth().then(() => {
           had_dinner: 0,
           had_drink: 0,
           is_attend: false,
-          amount_paid: this.amount_paid,
+          amount_paid: parseInt(this.amount_paid),
           type: this.type,
           checked_in: Date.now(),
           registered_at: Date.now(),
@@ -35,6 +35,9 @@ requireAuth().then(() => {
         ref.push(registrant).then(async (snap) => {
           let newConfig = {
             total_attend: firebase.database.ServerValue.increment(1),
+            total_revenue: firebase.database.ServerValue.increment(
+              registrant.amount_paid
+            ),
           };
           if (this.is_walked_in) {
             newConfig.total_walked = firebase.database.ServerValue.increment(1);
