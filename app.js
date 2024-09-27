@@ -10,9 +10,10 @@ const firebaseConfig = {
 };
 
 const app = firebase.initializeApp(firebaseConfig);
-const database = app.database();
 
 function requireAuth() {
+  window.database = app.database();
+
   return new Promise((resolve) => {
     app.auth().onAuthStateChanged((user) => {
       if (user) {
