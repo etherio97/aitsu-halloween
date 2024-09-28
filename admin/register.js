@@ -37,12 +37,12 @@ requireAuth().then(() => {
         this.is_loading = true;
         ref.push(registrant).then(async (snap) => {
           let newConfig = {
-            total_attend: firebase.database.ServerValue.increment(1),
             total_revenue: firebase.database.ServerValue.increment(
               registrant.amount_paid
             ),
           };
           if (this.is_walked_in) {
+            newConfig.total_attend = firebase.database.ServerValue.increment(1);
             newConfig.total_walked = firebase.database.ServerValue.increment(1);
           } else {
             newConfig.total_registered =
