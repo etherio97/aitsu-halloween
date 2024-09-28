@@ -27,7 +27,7 @@ requireAuth().then(() => {
           is_attend: true,
           amount_paid: parseInt(this.amount_paid),
           type: this.type,
-          checked_in: Date.now(),
+          checked_in: this.is_walked_in ? Date.now() : 0,
           registered_at: Date.now(),
         };
         if (!registrant.student_id.includes("st")) {
