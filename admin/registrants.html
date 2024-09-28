@@ -21,9 +21,11 @@
         <table class="w-full text-sm">
           <thead class="text-xs text-white uppercase bg-gray-600">
             <tr>
+              <th scope="col" class="px-6 py-3">ID</th>
               <th scope="col" class="px-6 py-3">Student ID</th>
               <th scope="col" class="px-6 py-3">Name</th>
-              <th scope="col" class="px-6 py-3">School</th>
+              <th scope="col" class="px-6 py-3">Type</th>
+              <th scope="col" class="px-6 py-3">Email</th>
             </tr>
           </thead>
           <tbody>
@@ -32,17 +34,19 @@
               v-for="registrant in registrants"
               :key="registrant.student_id"
             >
+              <td class="px-6 py-4 whitespace-nowrap">{{registrant.id}}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 {{registrant.student_id}}
               </td>
               <td class="px-6 py-4 whitespace-nowrap">{{registrant.name}}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{registrant.school}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{registrant.type}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{registrant.email}}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
     <script src="../app.js"></script>
-    <script src="index.js"></script>
+    <script src="registrants.js"></script>
   </body>
 </html>

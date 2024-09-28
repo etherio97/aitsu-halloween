@@ -20,11 +20,11 @@ requireAuth().then(() => {
           name: this.name,
           student_id: this.student_id.toLowerCase(),
           dietary_preference: this.dietary_preference,
-          is_walked_in: !!this.is_walked_in,
           email: this.email,
           had_dinner: 0,
           had_drink: 0,
-          is_attend: true,
+          is_walked_in: !!this.is_walked_in,
+          is_attend: !!this.is_walked_in,
           amount_paid: parseInt(this.amount_paid),
           type: this.type,
           checked_in: this.is_walked_in ? Date.now() : 0,
@@ -41,7 +41,7 @@ requireAuth().then(() => {
               registrant.amount_paid
             ),
           };
-          if (this.is_walked_in) {
+          if (registrant.is_walked_in) {
             newConfig.total_attend = firebase.database.ServerValue.increment(1);
             newConfig.total_walked = firebase.database.ServerValue.increment(1);
           } else {
