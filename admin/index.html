@@ -148,9 +148,44 @@
       <div
         v-if="share_qr"
         class="fixed h-screen w-screen bg-white inset-0 flex justify-center items-center"
+        style="
+          background-image: url(/assets/background.png);
+          background-position: center bottom;
+          background-repeat: no-repeat;
+          background-size: cover;
+        "
       >
         <div class="qr-code-container">
-          <div class="qr-code"></div>
+          <div class="px-5 py-8 bg-slate-200/70 rounded-xl mb-6">
+            <div
+              class="qr-code flex flex-col items-center justify-center space-y-4"
+            ></div>
+
+            <div class="space-y-4 pt-2">
+              <div class="space-y-2">
+                <p class="text-center font-bold text-lg">{{registrant.name}}</p>
+                <div class="flex space-x-2 items-center justify-center">
+                  <p
+                    class="bg-blue-100 hover:bg-blue-200 text-blue-800 text-xs font-semibold me-2 px-2.5 py-0.5 rounded border border-blue-400 inline-flex items-center justify-center"
+                  >
+                    {{registrant.student_id}}{{checkWalkin(registrant)}}
+                  </p>
+                </div>
+                <div class="flex space-x-2 items-center justify-center">
+                  <p
+                    class="bg-blue-300 text-blue-800 font-medium me-2 px-2.5 py-0.5 rounded text-center text-xs"
+                  >
+                    {{registrant.type}}
+                  </p>
+                  <p
+                    class="bg-teal-200 text-teal-800 font-medium me-2 px-2.5 py-0.5 rounded text-center text-xs"
+                  >
+                    {{registrant.dietary_preference}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="pt-5 w-full flex justify-center items-center">
             <button

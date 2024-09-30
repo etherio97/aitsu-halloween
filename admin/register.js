@@ -12,6 +12,7 @@ requireAuth().then(() => {
       is_registered: false,
       is_loading: false,
       remaining: { pork: 0, chicken: 0, vege: 0 },
+      registrant: {},
     },
     methods: {
       onRegister() {
@@ -81,10 +82,14 @@ requireAuth().then(() => {
           var url = new URL(`${location.protocol}//${location.host}`);
           url.searchParams.append("id", id);
           this.is_registered = true;
+          this.registrant = registrant;
           setTimeout(() => {
             generate(url.toString());
           }, 200);
         });
+      },
+      checkWalkin(registrant) {
+        return registrant.is_walked_in ? " (Walk-in)" : "";
       },
     },
     mounted() {

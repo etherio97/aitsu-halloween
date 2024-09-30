@@ -8,6 +8,7 @@ requireAuth().then(() => {
       is_loading: false,
       is_found: false,
       share_qr: false,
+      registrant: {},
     },
     methods: {
       onSearch() {
@@ -50,11 +51,12 @@ requireAuth().then(() => {
             this.onSearch();
           });
       },
-      onShareQR({ id }) {
+      onShareQR(registrant) {
         this.share_qr = true;
+        this.registrant = registrant;
         setTimeout(() => {
           var url = new URL(`${location.protocol}//${location.host}`);
-          url.searchParams.append("id", id);
+          url.searchParams.append("id", registrant.id);
           generate(url.toString());
         }, 200);
       },
@@ -123,6 +125,9 @@ requireAuth().then(() => {
       },
       toDate(input) {
         return input ? moment(input).format("DD/MM/YYYY HH:MM:SS") : "-";
+      },
+      checkWalkin(registrant) {
+        return registrant.is_walked_in ? " (Walk-in)" : "";
       },
     },
     mounted() {
