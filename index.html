@@ -105,7 +105,10 @@
           localStorage.setItem("__ID", id);
         } else {
           let _id = localStorage.getItem("__ID");
-          if (!_id) return;
+          if (!_id)
+            return alert(
+              "Please contact registration counter to scan your ticket."
+            );
           id = _id;
         }
 
@@ -135,10 +138,15 @@
               drink2El.style.opacity =
                 0.2;
 
-            if (!data) return;
+            if (!data)
+              return alert(
+                "Ticket not found! Please contact registration counter."
+              );
             userEl.style.opacity = 1;
             nameEl.innerText = data.name;
-            sidEl.innerText = data.student_id;
+            sidEl.innerText = data.is_walked_in
+              ? data.student_id + " [Walk-In]"
+              : data.student_id;
             typeEl.innerText = data.type;
             dietaryEl.innerText = data.dietary_preference;
             if (data.had_dinner) {
