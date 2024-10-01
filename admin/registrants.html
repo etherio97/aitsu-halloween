@@ -24,8 +24,13 @@
               <th scope="col" class="px-6 py-3">ID</th>
               <th scope="col" class="px-6 py-3">Student ID</th>
               <th scope="col" class="px-6 py-3">Name</th>
-              <th scope="col" class="px-6 py-3">Type</th>
+              <th scope="col" class="px-6 py-3">Participation Type</th>
               <th scope="col" class="px-6 py-3">Email</th>
+              <th scope="col" class="px-6 py-3">Dietary Preference</th>
+              <th scope="col" class="px-6 py-3">Attendance</th>
+              <th scope="col" class="px-6 py-3">Registration Type</th>
+              <th scope="col" class="px-6 py-3">Dinner</th>
+              <th scope="col" class="px-6 py-3">Drinks</th>
             </tr>
           </thead>
           <tbody>
@@ -41,6 +46,18 @@
               <td class="px-6 py-4 whitespace-nowrap">{{registrant.name}}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{registrant.type}}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{registrant.email}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{registrant.dietary_preference}}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{registrant.email}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{registrant.is_attend?'Yes':'No'}}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap"></td>
+                {{registrant.is_walked_in?'Walk In':'Registered'}}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{registrant.had_dinner?'Yes':'No'}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{registrant.had_drinks}}</td>
             </tr>
           </tbody>
         </table>
