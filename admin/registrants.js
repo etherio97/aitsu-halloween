@@ -16,6 +16,58 @@ requireAuth().then(() => {
           generate(url.toString());
         }, 200);
       },
+      exportExcel() {
+        const data = this.registrants.map((user) => ({
+          ID: user.id,
+          "Student ID": user.student_id,
+          Name: user.name,
+          "Participation Type": user.type,
+          "Amount Paid": user.amount_paid,
+          "Email Address": user.email,
+          "Dietary Preference": user.dietary_preference,
+          Attendance: user.is_attend ? "Yes" : "No",
+          "Registration Type": user.is_walked_in ? "Walk In" : "Registered",
+          Dinner: user.had_dinner ? "Yes" : "No",
+          Drinks: user.had_drink,
+          "Check In Time": user.checked_in
+            ? moment(user.checked_in).format("DD/MM/YYYY HH:MM:SS")
+            : "",
+          "Register Time": moment(user.registered_at).format(
+            "DD/MM/YYYY HH:MM:SS"
+          ),
+        }));
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        const s2ab = (s) => {
+          const buf = new ArrayBuffer(s.length);
+          const view = new Uint8Array(buf);
+          for (let i = 0; i < s.length; i++) {
+            view[i] = s.charCodeAt(i) & 0xff;
+          }
+          return buf;
+        };
+
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Participants");
+
+        const wbout = XLSX.write(workbook, {
+          bookType: "xlsx",
+          type: "binary",
+        });
+
+        const blob = new Blob([s2ab(wbout)], {
+          type: "application/octet-stream",
+        });
+
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download =
+          "Beats and Breaks Party - Participant Lists - " +
+          moment().format("DD-MM-YYYY-HH-MM-SS") +
+          ".xlsx";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
       onCloseQR() {
         this.share_qr = false;
       },
