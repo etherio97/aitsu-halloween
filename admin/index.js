@@ -4,18 +4,34 @@ requireAuth().then(() => {
     data: {
       config: { fee: 0 },
       student_id: "",
+      email: "",
       lists: [],
       is_loading: false,
       is_found: false,
       share_qr: false,
       registrant: {},
+      search_type: "",
     },
     methods: {
+      inputEvent(event) {
+        this.search_type = event;
+        if (event === "email") {
+          this.student_id = "";
+        } else {
+          this.email = "";
+        }
+      },
       onSearch() {
-        let sid = this.student_id.toLowerCase();
-        if (!sid.includes("st")) sid = "st" + sid;
+        let input, studentRef;
         let ref = database.ref("v0").child("registered");
-        let studentRef = ref.orderByChild("student_id").equalTo(sid);
+        if (this.search_type == "email") {
+          input = this.email;
+          studentRef = ref.orderByChild("email").equalTo(input);
+        } else {
+          input = this.student_id.toLowerCase();
+          if (!input.includes("st")) input = "st" + input;
+          studentRef = ref.orderByChild("student_id").equalTo(input);
+        }
         this.is_loading = true;
         studentRef.get().then((snap) => {
           this.is_loading = false;
@@ -128,6 +144,13 @@ requireAuth().then(() => {
       },
       checkWalkin(registrant) {
         return registrant.is_walked_in ? " (Walk-in)" : "";
+      },
+    },
+    computed: {
+      isDisabled() {
+        if (this.is_loading) return true;
+        if (!this.email && !this.student_id) return true;
+        return false;
       },
     },
     mounted() {
