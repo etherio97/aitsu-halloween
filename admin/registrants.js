@@ -62,7 +62,7 @@ requireAuth().then(() => {
         link.href = URL.createObjectURL(blob);
         link.download =
           "Beats and Breaks Party - Participant Lists - " +
-          moment().format("DD-MM-YYYY-HH-MM-SS") +
+          moment().format("DD-MM-YYYY-HH-MM") +
           ".xlsx";
         document.body.appendChild(link);
         link.click();
