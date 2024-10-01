@@ -2,9 +2,27 @@ requireAuth().then(() => {
   new Vue({
     el: "#app",
     data: {
+      registrant: {},
       registrants: [],
+      share_qr: false,
     },
-    methods: {},
+    methods: {
+      onShareQR(registrant) {
+        this.share_qr = true;
+        this.registrant = registrant;
+        setTimeout(() => {
+          var url = new URL(`${location.protocol}//${location.host}`);
+          url.searchParams.append("id", registrant.id);
+          generate(url.toString());
+        }, 200);
+      },
+      onCloseQR() {
+        this.share_qr = false;
+      },
+      checkWalkin(registrant) {
+        return registrant.is_walked_in ? " (Walk-in)" : "";
+      },
+    },
     mounted() {
       let registeredRef = database.ref("v0").child("registered");
       registeredRef.get().then((snap) => {
