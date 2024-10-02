@@ -65,16 +65,31 @@ requireAuth().then(() => {
           }
           switch (this.dietary_preference) {
             case "Chicken Dinner Box":
-              newConfig.walked_chicken =
-                firebase.database.ServerValue.increment(1);
+              if (registrant.is_walked_in) {
+                newConfig.walked_chicken =
+                  firebase.database.ServerValue.increment(1);
+              } else {
+                newConfig.registered_chicken =
+                  firebase.database.ServerValue.increment(1);
+              }
               break;
             case "Pork Dinner Box":
-              newConfig.walked_pork =
-                firebase.database.ServerValue.increment(1);
+              if (registrant.is_walked_in) {
+                newConfig.walked_pork =
+                  firebase.database.ServerValue.increment(1);
+              } else {
+                newConfig.registered_pork =
+                  firebase.database.ServerValue.increment(1);
+              }
               break;
             case "Vegetarian Dinner Box":
-              newConfig.walked_vege =
-                firebase.database.ServerValue.increment(1);
+              if (registrant.is_walked_in) {
+                newConfig.walked_vege =
+                  firebase.database.ServerValue.increment(1);
+              } else {
+                newConfig.registered_vege =
+                  firebase.database.ServerValue.increment(1);
+              }
               break;
           }
           await database.ref("v0").child("config").update(newConfig);
@@ -94,7 +109,7 @@ requireAuth().then(() => {
     },
     mounted() {
       let ref = database.ref("v0").child("config");
-      ref.get().then((snap) => {
+      ref.on("value", (snap) => {
         let config = snap.val();
         this.amount_paid = config.fee;
         this.remaining.chicken =

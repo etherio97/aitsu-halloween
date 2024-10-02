@@ -49,23 +49,23 @@ requireAuth().then(() => {
             switch (item.dietary_preference) {
               case "Chicken Dinner Box":
                 if (item.is_walked_in) {
-                  registered_chicken++;
-                } else {
                   walked_chicken++;
+                } else {
+                  registered_chicken++;
                 }
                 break;
               case "Pork Dinner Box":
                 if (item.is_walked_in) {
-                  registered_pork++;
-                } else {
                   walked_pork++;
+                } else {
+                  registered_pork++;
                 }
                 break;
               case "Vegetarian Dinner Box":
                 if (item.is_walked_in) {
-                  registered_vege++;
-                } else {
                   walked_vege++;
+                } else {
+                  registered_vege++;
                 }
                 break;
             }
@@ -88,17 +88,20 @@ requireAuth().then(() => {
               walked_pork,
               walked_vege,
             })
-            .then((snap) => {
+            .then(() => {
               this.is_recalculating = false;
-              this.config = snap.val();
             });
         });
       },
     },
     mounted() {
       let ref = database.ref("v0").child("config");
-      ref.get().then((snap) => {
-        this.config = snap.val();
+      ref.on("value", (snap) => {
+        try {
+          this.config = snap.val();
+        } catch (e) {
+          location.reload();
+        }
       });
     },
   });

@@ -77,7 +77,7 @@ requireAuth().then(() => {
     },
     mounted() {
       let registeredRef = database.ref("v0").child("registered");
-      registeredRef.get().then((snap) => {
+      registeredRef.on("value", (snap) => {
         let registrants = Object.entries(snap.val()).map(([id, data]) => ({
           id,
           ...data,
