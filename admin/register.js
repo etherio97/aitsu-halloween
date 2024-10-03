@@ -109,7 +109,7 @@ requireAuth().then(() => {
     },
     mounted() {
       let ref = database.ref("v0").child("config");
-      ref.on("value", (snap) => {
+      ref.get().then((snap) => {
         let config = snap.val();
         this.amount_paid = config.fee;
         this.remaining.chicken =
