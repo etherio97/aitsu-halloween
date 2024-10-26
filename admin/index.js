@@ -48,9 +48,9 @@ requireAuth().then(() => {
           }));
         });
       },
-      onCheckIn({ id }) {
+      onCheckIn(registrant) {
         if (!confirm("Are you sure do you mark as check in?")) return;
-        let ref = database.ref("v0").child("registered").child(id);
+        let ref = database.ref("v0").child("registered").child(registrant.id);
         ref
           .update({
             is_attend: true,
@@ -63,8 +63,8 @@ requireAuth().then(() => {
               .update({
                 total_attend: firebase.database.ServerValue.increment(1),
               });
-            this.onShareQR({ id });
-            this.onSearch();
+            // this.onShareQR({ id: registrant.id });
+            this.onSearch(registrant);
           });
       },
       onShareQR(registrant) {
@@ -105,15 +105,11 @@ requireAuth().then(() => {
               newConfig.total_walked =
                 firebase.database.ServerValue.increment(-1);
               switch (dietary_preference) {
-                case "Chicken Dinner Box":
+                case "Chicken":
                   newConfig.walked_chicken =
                     firebase.database.ServerValue.increment(-1);
                   break;
-                case "Pork Dinner Box":
-                  newConfig.walked_pork =
-                    firebase.database.ServerValue.increment(-1);
-                  break;
-                case "Vegetarian Dinner Box":
+                case "Vegetarian":
                   newConfig.walked_vege =
                     firebase.database.ServerValue.increment(-1);
                   break;
@@ -122,15 +118,11 @@ requireAuth().then(() => {
               newConfig.total_registered =
                 firebase.database.ServerValue.increment(-1);
               switch (dietary_preference) {
-                case "Chicken Dinner Box":
+                case "Chicken":
                   newConfig.registered_chicken =
                     firebase.database.ServerValue.increment(-1);
                   break;
-                case "Pork Dinner Box":
-                  newConfig.registered_pork =
-                    firebase.database.ServerValue.increment(-1);
-                  break;
-                case "Vegetarian Dinner Box":
+                case "Vegetarian":
                   newConfig.registered_vege =
                     firebase.database.ServerValue.increment(-1);
                   break;

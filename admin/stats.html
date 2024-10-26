@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"
     />
-    <title>Beats & Breaks</title>
+    <title>Halloween Party</title>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
@@ -187,25 +187,6 @@
         >
           <div class="flex items-start justify-between">
             <p class="font-medium tracking-tight leading-6 truncate">
-              Ordered Pork
-            </p>
-          </div>
-          <div class="flex flex-col items-center mt-2">
-            <p
-              class="text-xl sm:text-4xl font-bold tracking-tight leading-none text-blue-500"
-            >
-              {{config.total_pork}}
-            </p>
-            <p class="text-xs font-medium text-blue-600 dark:text-blue-500">
-              Box
-            </p>
-          </div>
-        </div>
-        <div
-          class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
-        >
-          <div class="flex items-start justify-between">
-            <p class="font-medium tracking-tight leading-6 truncate">
               Ordered Vegetarian
             </p>
           </div>
@@ -233,25 +214,6 @@
               class="text-xl sm:text-4xl font-bold tracking-tight leading-none text-blue-500"
             >
               {{config.total_chicken-(config.registered_chicken+config.walked_chicken)}}
-            </p>
-            <p class="text-xs font-medium text-blue-600 dark:text-blue-500">
-              Box
-            </p>
-          </div>
-        </div>
-        <div
-          class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
-        >
-          <div class="flex items-start justify-between">
-            <p class="font-medium tracking-tight leading-6 truncate">
-              Remaining Pork
-            </p>
-          </div>
-          <div class="flex flex-col items-center mt-2">
-            <p
-              class="text-xl sm:text-4xl font-bold tracking-tight leading-none text-blue-500"
-            >
-              {{config.total_pork-(config.registered_pork+config.walked_pork)}}
             </p>
             <p class="text-xs font-medium text-blue-600 dark:text-blue-500">
               Box

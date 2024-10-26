@@ -22,10 +22,8 @@ requireAuth().then(() => {
             total_performer = 0,
             total_volunteer = 0,
             registered_chicken = 0,
-            registered_pork = 0,
             registered_vege = 0,
             walked_chicken = 0,
-            walked_pork = 0,
             walked_vege = 0;
           for (let item of data) {
             if (item.is_attend) {
@@ -47,21 +45,14 @@ requireAuth().then(() => {
                 total_participant++;
             }
             switch (item.dietary_preference) {
-              case "Chicken Dinner Box":
+              case "Chicken":
                 if (item.is_walked_in) {
                   walked_chicken++;
                 } else {
                   registered_chicken++;
                 }
                 break;
-              case "Pork Dinner Box":
-                if (item.is_walked_in) {
-                  walked_pork++;
-                } else {
-                  registered_pork++;
-                }
-                break;
-              case "Vegetarian Dinner Box":
+              case "Vegetarian":
                 if (item.is_walked_in) {
                   walked_vege++;
                 } else {
@@ -82,10 +73,8 @@ requireAuth().then(() => {
               total_performer,
               total_volunteer,
               registered_chicken,
-              registered_pork,
               registered_vege,
               walked_chicken,
-              walked_pork,
               walked_vege,
             })
             .then(() => {

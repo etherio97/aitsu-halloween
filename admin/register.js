@@ -11,7 +11,7 @@ requireAuth().then(() => {
       is_walked_in: true,
       is_registered: false,
       is_loading: false,
-      remaining: { pork: 0, chicken: 0, vege: 0 },
+      remaining: { chicken: 0, vege: 0 },
       registrant: {},
     },
     methods: {
@@ -23,7 +23,6 @@ requireAuth().then(() => {
           dietary_preference: this.dietary_preference,
           email: this.email,
           had_dinner: 0,
-          had_drink: 0,
           is_walked_in: !!this.is_walked_in,
           is_attend: !!this.is_walked_in,
           amount_paid: parseInt(this.amount_paid),
@@ -64,7 +63,7 @@ requireAuth().then(() => {
               break;
           }
           switch (this.dietary_preference) {
-            case "Chicken Dinner Box":
+            case "Chicken":
               if (registrant.is_walked_in) {
                 newConfig.walked_chicken =
                   firebase.database.ServerValue.increment(1);
@@ -73,16 +72,7 @@ requireAuth().then(() => {
                   firebase.database.ServerValue.increment(1);
               }
               break;
-            case "Pork Dinner Box":
-              if (registrant.is_walked_in) {
-                newConfig.walked_pork =
-                  firebase.database.ServerValue.increment(1);
-              } else {
-                newConfig.registered_pork =
-                  firebase.database.ServerValue.increment(1);
-              }
-              break;
-            case "Vegetarian Dinner Box":
+            case "Vegetarian":
               if (registrant.is_walked_in) {
                 newConfig.walked_vege =
                   firebase.database.ServerValue.increment(1);
@@ -115,8 +105,6 @@ requireAuth().then(() => {
         this.remaining.chicken =
           config.total_chicken -
           (config.registered_chicken + config.walked_chicken);
-        this.remaining.pork =
-          config.total_pork - (config.registered_pork + config.walked_pork);
         this.remaining.vege =
           config.total_vege - (config.registered_vege + config.walked_vege);
       });

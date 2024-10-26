@@ -28,7 +28,6 @@ requireAuth().then(() => {
           Attendance: user.is_attend ? "Yes" : "No",
           "Registration Type": user.is_walked_in ? "Walk In" : "Registered",
           Dinner: user.had_dinner ? "Yes" : "No",
-          Drinks: user.had_drink,
           "Check In Time": user.checked_in
             ? moment(user.checked_in).format("DD/MM/YYYY HH:MM:SS")
             : "",

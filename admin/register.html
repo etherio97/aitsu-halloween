@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"
     />
-    <title>Beats & Breaks</title>
+    <title>Halloween Party</title>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
@@ -80,7 +80,7 @@
             <label
               for="dietary_preference"
               class="block mb-2 text-sm font-medium text-gray-900"
-              >Dietary Preference</label
+              >Food Option</label
             >
             <select
               v-model="dietary_preference"
@@ -89,14 +89,9 @@
               required
             >
               <option value="" selected disabled>- select option -</option>
-              <option value="Chicken Dinner Box">
-                Chicken Dinner Box ({{remaining.chicken}})
-              </option>
-              <option value="Pork Dinner Box">
-                Pork Dinner Box ({{remaining.pork}})
-              </option>
-              <option value="Vegetarian Dinner Box">
-                Vegetarian Dinner Box ({{remaining.vege}})
+              <option value="Chicken">Chicken ({{remaining.chicken}})</option>
+              <option value="Vegetarian">
+                Vegetarian ({{remaining.vege}})
               </option>
             </select>
           </div>
@@ -149,7 +144,7 @@
         v-if="is_registered"
         class="fixed h-screen w-screen bg-white inset-0 flex justify-center items-center"
         style="
-          background-image: url(/assets/background.png);
+          background-image: url(/assets/background.jpg);
           background-position: center bottom;
           background-repeat: no-repeat;
           background-size: cover;

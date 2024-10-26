@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"
     />
-    <title>Beats & Breaks</title>
+    <title>Halloween Party</title>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/assets/styles.css" />
     <style>
       body {
-        background-image: url(/assets/background.png);
+        background-image: url(/assets/background.jpg);
         background-position: center bottom;
         background-repeat: no-repeat;
         background-size: cover;
@@ -23,8 +23,8 @@
   </head>
   <body class="bg-slate-800 h-screen">
     <div class="p-5 mx-auto container max-w-[480px] mt-6" id="app">
-      <div class="flex justify-center items-center pb-10">
-        <img class="w-72" src="assets/text.png" alt="" />
+      <div class="flex justify-center items-center pb-5">
+        <img class="h-36" src="assets/text.png" alt="" />
       </div>
 
       <div class="px-5 py-8 bg-slate-200/70 rounded-xl mb-6">
@@ -62,22 +62,6 @@
                 class="w-14"
                 id="dinner"
                 src="assets/dinner.png"
-                style="opacity: 0.2"
-              />
-            </div>
-            <div>
-              <img
-                class="w-14"
-                id="drink_1"
-                src="assets/drinks.png"
-                style="opacity: 0.2"
-              />
-            </div>
-            <div>
-              <img
-                class="w-14"
-                id="drink_2"
-                src="assets/drinks.png"
                 style="opacity: 0.2"
               />
             </div>
@@ -127,16 +111,11 @@
             var nameEl = document.getElementById("name");
             var sidEl = document.getElementById("student_id");
             var dinnerEl = document.getElementById("dinner");
-            var drink1El = document.getElementById("drink_1");
-            var drink2El = document.getElementById("drink_2");
             var dietaryEl = document.getElementById("dietary_preference");
             var typeEl = document.getElementById("type");
             var checkedEl = document.getElementById("checked_in");
 
-            dinnerEl.style.opacity =
-              drink1El.style.opacity =
-              drink2El.style.opacity =
-                0.2;
+            dinnerEl.style.opacity = 0.2;
 
             if (!data)
               return alert(
@@ -151,12 +130,6 @@
             dietaryEl.innerText = data.dietary_preference;
             if (data.had_dinner) {
               dinnerEl.style.opacity = 1;
-            }
-            if (data.had_drink >= 1) {
-              drink1El.style.opacity = 1;
-            }
-            if (data.had_drink >= 2) {
-              drink2El.style.opacity = 1;
             }
             if (data.is_attend) {
               checkedEl.innerText = `Checked in at ${new Date(

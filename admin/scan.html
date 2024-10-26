@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
-    <title>Beats & Breaks</title>
+    <title>Halloween Party</title>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/firebase@8.10.1/firebase-database.js"></script>
@@ -33,15 +33,7 @@
                 required
               />
             </div>
-            <div>
-              <button
-                v-on:click="onScanQR()"
-                type="button"
-                class="text-white bg-gray-400 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-gray-400"
-              >
-                Scan
-              </button>
-            </div>
+            
           </div>
 
           <button
@@ -66,27 +58,6 @@
                 class="text-white bg-red-600 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
               >
                 Dinner
-              </button>
-              <button
-                v-on:click="onDrink(list)"
-                :disabled="list.had_drink>=1"
-                class="text-white bg-red-600 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
-              >
-                Drink 1
-              </button>
-              <button
-                v-on:click="onDrink(list)"
-                :disabled="list.had_drink>=2"
-                class="text-white bg-red-600 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
-              >
-                Drink 2
-              </button>
-              <button
-                v-on:click="onCancelDrink(list)"
-                :disabled="list.had_drink<1"
-                class="text-white bg-gray-600 disabled:bg-gray-300 focus:outline-none rounded-lg px-5 py-1"
-              >
-                Cancel Drink
               </button>
             </div>
           </div>
@@ -146,32 +117,6 @@
         </div>
       </div>
 
-      <div
-        v-if="scan_qr"
-        class="fixed h-screen w-screen bg-white inset-0 flex justify-center items-center"
-      >
-        <div class="flex flex-col space-y-5 justify-center items-center">
-          <div>
-            <div class="mb-4">
-              <select v-model="device">
-                <option v-for="device in devicesList" :value="device.id">
-                  {{device.label}}
-                </option>
-              </select>
-            </div>
-            <div id="reader" class="w-screen max-w-[320px]"></div>
-          </div>
-
-          <div class="pt-5 w-full flex justify-center items-center">
-            <button
-              v-on:click="onCloseQR()"
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
     <script src="../app.js"></script>
     <script src="scan.js"></script>

@@ -3,7 +3,7 @@ requireAuth().then(() => {
   new Vue({
     el: "#app",
     data: {
-      config: { fee: 0, max_drink: 0 },
+      config: { fee: 0 },
       student_id: "",
       lists: [],
       is_loading: false,
@@ -93,26 +93,6 @@ requireAuth().then(() => {
         let ref = database.ref("v0").child("registered").child(id);
         ref
           .update({ had_dinner: firebase.database.ServerValue.increment(1) })
-          .then(() => {
-            this.searchById(id);
-          });
-      },
-      onDrink({ id }) {
-        if (!confirm("Are you sure do you want to proceed this action?"))
-          return;
-        let ref = database.ref("v0").child("registered").child(id);
-        ref
-          .update({ had_drink: firebase.database.ServerValue.increment(1) })
-          .then(() => {
-            this.searchById(id);
-          });
-      },
-      onCancelDrink({ id }) {
-        if (!confirm("Are you sure do you want to proceed this action?"))
-          return;
-        let ref = database.ref("v0").child("registered").child(id);
-        ref
-          .update({ had_drink: firebase.database.ServerValue.increment(-1) })
           .then(() => {
             this.searchById(id);
           });
